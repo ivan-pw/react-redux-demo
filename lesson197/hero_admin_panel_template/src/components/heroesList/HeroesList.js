@@ -6,8 +6,9 @@ import { createSelector } from 'reselect';
 
 import {
   // heroesFetching,
-  heroesFetched,
-  heroesFetchingError,
+  // heroesFetched,
+  // heroesFetchingError,
+  fetchHeroes,
   heroDeleted,
 } from '../../actions';
 import HeroesListItem from '../heroesListItem/HeroesListItem';
@@ -49,11 +50,13 @@ const HeroesList = () => {
   const dispatch = useDispatch();
   const { request } = useHttp();
 
+  // useEffect(() => {
+  //   dispatch(heroesFetching);
+  //   request('http://localhost:3001/heroes')
+  //     .then((data) => dispatch(heroesFetched(data)))
+  //     .catch(() => dispatch(heroesFetchingError()));
   useEffect(() => {
-    dispatch('HEROES_FETCHING');
-    request('http://localhost:3001/heroes')
-      .then((data) => dispatch(heroesFetched(data)))
-      .catch(() => dispatch(heroesFetchingError()));
+    dispatch(fetchHeroes(request));
 
     // eslint-disable-next-line
   }, []);
