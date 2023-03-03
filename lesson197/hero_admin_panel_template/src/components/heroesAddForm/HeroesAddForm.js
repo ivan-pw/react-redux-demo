@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHttp } from '../../hooks/http.hook';
 import { useState } from 'react';
 
-import { heroCreated } from '../../actions';
+import { heroCreated } from '../heroesList/heroesSlice';
 
 import { v4 as uuidv4 } from 'uuid';
 

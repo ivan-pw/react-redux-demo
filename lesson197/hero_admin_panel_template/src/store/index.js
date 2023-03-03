@@ -1,7 +1,5 @@
-// import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
-// import ReduxThunk from 'redux-thunk';
-import heroes from '../reducers/heroes';
-import filters from '../reducers/filters';
+import heroes from '../components/heroesList/heroesSlice';
+import filters from '../components/heroesFilters/filtersSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 // const stringMiddleware = ({dispatch, getState})=>(dispatch)=>(action)=>{
@@ -12,14 +10,6 @@ const stringMiddleware = (store) => (next) => (action) => {
 
   return next(action);
 };
-
-// const store = createStore(
-//   combineReducers({ heroes: heroes, filters }),
-//   compose(
-//     applyMiddleware(ReduxThunk, stringMiddleware),
-//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-//   )
-// );
 
 const store = configureStore({
   reducer: { heroes, filters },
