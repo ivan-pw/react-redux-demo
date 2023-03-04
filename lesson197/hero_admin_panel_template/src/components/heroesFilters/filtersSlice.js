@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// import { create } from 'json-server';
+import { useHttp } from '../../hooks/http.hook';
 
 const initialState = {
   filters: [],
@@ -6,23 +8,33 @@ const initialState = {
   activeFilter: 'all',
 };
 
+export const fetchFilters = createAsyncThunk('filters/fetchFilters', () => {
+  const { request } = useHttp();
+
+  return request('http://localhost:3001/filters');
+});
+
 const filtersSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    filtersFetching: (state) => {
-      state.filtersLoadingStatus = 'loading';
-    },
-    filtersFetched: (state, action) => {
-      state.filtersLoadingStatus = 'idle';
-      state.filters = action.payload;
-    },
-    filtersFetchingError: (state) => {
-      state.filtersLoadingStatus = 'error';
-    },
-    activeFilterChanged: (state, action) => {
+    filterChanged: (state, action) => {
       state.activeFilter = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchFilters.pending, (state) => {
+        state.filtersLoadingStatus = 'loading';
+      })
+      .addCase(fetchFilters.fulfilled, (state, action) => {
+        state.filtersLoadingStatus = 'idle';
+        state.filters = action.payload;
+      })
+      .addCase(fetchFilters.rejected, (state) => {
+        state.filtersLoadingStatus = 'error';
+      })
+      .addDefaultCase(() => {});
   },
 });
 
@@ -33,5 +45,5 @@ export const {
   filtersFetching,
   filtersFetched,
   filtersFetchingError,
-  activeFilterChanged,
+  filterChanged,
 } = actions;
