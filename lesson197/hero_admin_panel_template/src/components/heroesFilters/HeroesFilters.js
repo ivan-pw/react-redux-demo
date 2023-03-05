@@ -2,8 +2,9 @@ import { useHttp } from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
+import store from '../../store';
 
-import { filterChanged, fetchFilters } from './filtersSlice';
+import { filtersChanged, fetchFilters, selectAll } from './filtersSlice';
 
 import Spinner from '../spinner/Spinner';
 
@@ -15,9 +16,12 @@ import Spinner from '../spinner/Spinner';
 // Представьте, что вы попросили бэкенд-разработчика об этом
 
 const HeroesFilters = () => {
-  const { filters, filtersLoadingStatus, activeFilter } = useSelector(
+  const { filtersLoadingStatus, activeFilter } = useSelector(
     (state) => state.filters
   );
+
+  const filters = selectAll(store.getState());
+  console.log(filters);
   const dispatch = useDispatch();
   const { request } = useHttp();
 
@@ -46,7 +50,7 @@ const HeroesFilters = () => {
           className={btnClass}
           key={name}
           id={name}
-          onClick={() => dispatch(filterChanged(name))}
+          onClick={() => dispatch(filtersChanged(name))}
         >
           {label}
         </button>
