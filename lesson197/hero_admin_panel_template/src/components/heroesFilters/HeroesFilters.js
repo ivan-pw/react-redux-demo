@@ -21,7 +21,7 @@ const HeroesFilters = () => {
   );
 
   const filters = selectAll(store.getState());
-  console.log(filters);
+  // console.log(filters);
   const dispatch = useDispatch();
   const { request } = useHttp();
 

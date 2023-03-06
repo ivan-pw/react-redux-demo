@@ -33,7 +33,7 @@
   ],
   "filters": [
     {
-      "name": "all",
+      "id": "all",
       "name": "all",
       "label": "Все",
       "className": "btn-outline-dark"
